@@ -1,0 +1,19 @@
+{
+  "name": "express",
+  "version": "1.0.0",
+  "description": "Chat app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "expose": "ngrok http 3000",
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "*",
+    "express-validator": "^3.1.2",
+    "ngrok": "^2.2.6",
+    "socket.io": "*"
+  },
+  "author": "Rob van der Pas",
+  "license": "ISC"
+}
