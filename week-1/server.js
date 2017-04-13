@@ -1,20 +1,25 @@
 var express = require('express');
+var path = require('path');
 var app = express();
+
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 
 users = [];
 connections = [];
 
-// server.listen(3000, function() {
-// 	console.log("Server started on port 3000...");
-// });
+server.listen(3000, function() {
+	console.log("Server started on port 3000...");
+});
 
-server.listen(process.env.PORT || 3000);
-console.log('server running...');
-;
+app.set('view engine', 'ejs' );
+
+app.set('views', path.join(__dirname, 'views'));
+
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
+  res.render('index.ejs');
 });
 
 io.sockets.on('connection', function(socket) {
@@ -32,8 +37,13 @@ io.sockets.on('connection', function(socket) {
 
   // Send message
   socket.on('send message', function(data) {
-    io.sockets.emit('new message', {msg: data, user: socket.username});
+    io.sockets.emit('new message', {
+      msg: data,
+      user: socket.username
+    });
+    console.log(data);
   });
+
 
   // New user
   socket.on('new user', function(data, callback) {
@@ -41,8 +51,10 @@ io.sockets.on('connection', function(socket) {
     socket.username = data;
     users.push(socket.username);
     updateUsernames();
+    console.log(socket.username);
   });
 
+  // Update users
   function updateUsernames() {
     io.sockets.emit('get users', users);
   };

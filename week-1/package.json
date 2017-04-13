@@ -9,10 +9,11 @@
     "start": "nodemon server.js"
   },
   "dependencies": {
-    "express": "*",
+    "express": "^4.15.2",
     "express-validator": "^3.1.2",
     "ngrok": "^2.2.6",
-    "socket.io": "*"
+    "socket.io": "*",
+    "ejs": "^2.5.6"
   },
   "author": "Rob van der Pas",
   "license": "ISC"
