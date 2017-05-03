@@ -1,0 +1,19 @@
+{
+  "name": "twitter",
+  "version": "1.0.0",
+  "description": "twitter api",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.15.2",
+    "express-validator": "^3.1.2",
+    "ngrok": "^2.2.6",
+    "socket.io": "*",
+    "ejs": "^2.5.6",
+    "twit": "^2.1.1"
+  },
+  "author": "Rob van der Pas",
+  "license": "ISC"
+}
