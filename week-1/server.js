@@ -1,9 +1,11 @@
-var express = require('express');
 var path = require('path');
-var app = express();
+var http = require('http');
+var express = require('express');
+var socketio = require('socket.io');
 
-var server = require('http').createServer(app);
-var io = require('socket.io').listen(server);
+var app = express();
+var server = http.createServer(app);
+var io = socketio.listen(server);
 
 users = [];
 connections = [];
