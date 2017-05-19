@@ -46,12 +46,17 @@ io.sockets.on('connection', function(socket) {
     console.log(data);
   });
 
-
   // New user
   socket.on('new user', function(data, callback) {
     callback(true);
     socket.username = data;
-    users.push(socket.username);
+
+    if (users.indexOf(socket.username) === -1) {
+      users.push(socket.username);
+      console.log('new users is : ' + socket.username);
+    } else {
+      console.log(socket.username + ' This username is already taken');
+    };
     updateUsernames();
     console.log(socket.username);
   });
