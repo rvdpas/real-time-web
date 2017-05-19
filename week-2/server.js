@@ -1,42 +1,60 @@
 var express = require('express');
-// var path = require('path');
+var path = require('path');
 var app = express();
-var Twit = require('twit');
+var Twitter = require('twitter');
 var config = require('./config');
-
+var bodyParser = require('body-parser');
 
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 
-// users = [];
-// connections = [];
-var T = new Twit(config);
-
-var params = {
-  q: 'banana since:2011-11-11',
-  count: 100
-}
-
-T.get('search/tweets', params, gotData);
-
-function gotData(err, data, response) {
-  console.log(data);
-}
-
+connections = [];
 
 server.listen(3000, function() {
 	console.log("Server started on port 3000...");
 });
 
-// app.set('view engine', 'ejs' );
+app.set('view engine', 'ejs' );
 
-// app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views'));
 
-// app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
-// app.get('/', function(req, res){
-//   res.render('index.ejs');
-// });
+app.get('/', function(req, res){
+  res.render('index.ejs');
+});
+
+app.post('/results', function(req, res, next){
+  var userinput = req.body.handle;
+
+  // Userinput from form will be put in the track
+  var params = {track: userinput};
+  // results will be stored in listOfResults
+  var listOfResults = []
+
+  // Open and manipulate data via a stream
+  var stream = client.stream('statuses/filter', params);
+  stream.on('data', function(data) {
+
+    // Relevant content from API will put in a object
+    var tweetObjects = {
+      name: data.user.name,
+      screen_name: data.user.screen_name,
+      msg: data.text
+    };
+
+    // Push object in to array listOfResults
+    listOfResults.push(tweetObjects);
+    console.log(listOfResults)
+    res.render('results.ejs', { tweets: listOfResults });
+
+  });
+
+  // If there is some error
+  stream.on('error', function(error) {
+    throw error;
+  });
+});
 
 // io.sockets.on('connection', function(socket) {
 //   connections.push(socket);

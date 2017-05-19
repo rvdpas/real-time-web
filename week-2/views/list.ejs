@@ -1,0 +1,15 @@
+<% include partials/head.ejs %>
+
+    <section>
+        <h1>Mensen die jou niet wederzijds volgen</h1>
+        <ul>
+        <% for(var i = 0; i < users.length; i++) {%>
+            <li>
+                <span><img src="<%- users[i].avatar%>" alt="<%- users[i].screen_name%>" /></span>
+                <a href="https://twitter.com/<%- users[i].screen_name%>" title="<%- users[i].name%>" target="_blank"><%- users[i].screen_name %></a>
+            </li>
+        <% } %>
+        </ul>
+    </section>
+
+<% include partials/footer.ejs %>

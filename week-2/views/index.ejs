@@ -1,18 +1,11 @@
 <% include partials/head.ejs %>
 
-    <section class="user-window">
-        <h1>Enter username</h1>
-        <form id="newuser" action="">
-            <input type="text" autofocus id="user" autocomplete="off">
-            <input type="submit" value="Add user">
-        </form>
-    </section>
-
-    <section class="msg-window">
-        <ul id="messages"></ul>
-        <form id="sendform" action="">
-            <input id="send" autocomplete="off"> <button>Send</button>
-        </form>
+    <section>
+      <h1>Waar wil jij de wereld over zien spreken?</h1>
+      <form action="/results" method="POST">
+        <input type="text" name="handle" class="input-user-field">
+        <input type="submit" value="Get users!">
+      </form>
     </section>
 
 <% include partials/footer.ejs %>

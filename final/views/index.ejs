@@ -1,0 +1,18 @@
+<% include partials/head.ejs %>
+
+    <section class="user-window">
+        <h1>Enter username</h1>
+        <form id="newuser" action="">
+            <input type="text" autofocus id="user" autocomplete="off">
+            <input type="submit" value="Add user">
+        </form>
+    </section>
+
+    <section class="msg-window">
+        <ul id="messages"></ul>
+        <form id="sendform" action="">
+            <input id="send" autocomplete="off"> <button>Send</button>
+        </form>
+    </section>
+
+<% include partials/footer.ejs %>

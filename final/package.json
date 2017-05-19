@@ -1,7 +1,7 @@
 {
-  "name": "twitter",
+  "name": "express",
   "version": "1.0.0",
-  "description": "twitter api",
+  "description": "Chat app",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -10,10 +10,8 @@
     "express": "^4.15.2",
     "express-validator": "^3.1.2",
     "ngrok": "^2.2.6",
-    "body-parser": "^1.17.1",
     "socket.io": "*",
-    "ejs": "^2.5.6",
-    "twit": "^2.1.1"
+    "ejs": "^2.5.6"
   },
   "author": "Rob van der Pas",
   "license": "ISC"
