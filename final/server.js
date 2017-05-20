@@ -1,6 +1,7 @@
 var path = require('path');
 var http = require('http');
 var express = require('express');
+var Twitter = require('twitter');
 var socketio = require('socket.io');
 
 var app = express();
@@ -10,9 +11,7 @@ var io = socketio.listen(server);
 users = [];
 connections = [];
 
-server.listen(3000, function() {
-	console.log("Server started on port 3000...");
-});
+require('dotenv').config();
 
 app.set('view engine', 'ejs' );
 
@@ -21,8 +20,25 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res){
-  res.render('index.ejs');
+
+  client.get('search/tweets', {q: 'node.js'}, function(error, tweets, response) {
+   console.log(tweets);
+  res.render('index.ejs', {data: tweets});
+  });
+
 });
+
+var client = new Twitter({
+  consumer_key: process.env.CONSUMER_KEY,
+  consumer_secret: process.env.CONSUMER_SECRET,
+  access_token_key: process.env.ACCESS_TOKEN,
+  access_token_secret: process.env.ACCESS_TOKEN_SECRET
+});
+
+client.get('search/tweets', {q: 'node.js'}, function(error, tweets, response) {
+   console.log(tweets);
+});
+
 
 io.sockets.on('connection', function(socket) {
   connections.push(socket);
@@ -65,4 +81,8 @@ io.sockets.on('connection', function(socket) {
   function updateUsernames() {
     io.sockets.emit('get users', users);
   };
+});
+
+server.listen(3000, function() {
+	console.log("Server started on port 3000...");
 });

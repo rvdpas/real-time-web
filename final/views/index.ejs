@@ -15,4 +15,8 @@
         </form>
     </section>
 
+    <% for(var i = 0; i < data.statuses.length; i++) {%>
+            <h2><%= data.statuses[i].text %></h2>
+        <% } %>
+
 <% include partials/footer.ejs %>
