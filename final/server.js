@@ -1,5 +1,6 @@
 var path = require('path');
 var http = require('http');
+var bodyParser = require('body-parser');
 var express = require('express');
 var Twitter = require('twitter');
 var socketio = require('socket.io');
@@ -8,26 +9,20 @@ var app = express();
 var server = http.createServer(app);
 var io = socketio.listen(server);
 
-users = [];
-connections = [];
+var userInput = '';
 
 require('dotenv').config();
 
+// Set View Engine
 app.set('view engine', 'ejs' );
 
 app.set('views', path.join(__dirname, 'views'));
 
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', function(req, res){
-
-  client.get('search/tweets', {q: 'node.js'}, function(error, tweets, response) {
-   console.log(tweets);
-  res.render('index.ejs', {data: tweets});
-  });
-
-});
-
+// Setting Twitter credentials
 var client = new Twitter({
   consumer_key: process.env.CONSUMER_KEY,
   consumer_secret: process.env.CONSUMER_SECRET,
@@ -35,54 +30,35 @@ var client = new Twitter({
   access_token_secret: process.env.ACCESS_TOKEN_SECRET
 });
 
-client.get('search/tweets', {q: 'node.js'}, function(error, tweets, response) {
-   console.log(tweets);
+// Get search results
+app.get('/', function(req, res){
+  res.render('index.ejs');
 });
 
+// Get search results
+app.get('/results', function(req, res){
+  res.render('results.ejs');
+});
 
-io.sockets.on('connection', function(socket) {
-  connections.push(socket);
-  console.log('Connected: %s sockets connected', connections.length);
+app.post('/results', function(req, res){
+  userInput = '';
+  userInput = req.body.hash;
+  console.log(userInput)
 
-  // Disconnect
-  socket.on('disconnect', function(data) {
-    users.splice(users.indexOf(socket.username), 1);
-    updateUsernames();
+  var stream = client.stream('statuses/filter', {track: userInput},  function(stream) {
 
-    connections.splice(connections.indexOf(socket), 1);
-    console.log('Disconnected: %s sockets connected', connections.length);
-  });
+    res.render('results.ejs');
 
-  // Send message
-  socket.on('send message', function(data) {
-    io.sockets.emit('new message', {
-      msg: data,
-      user: socket.username
+    stream.on('data', function(tweet) {
+     io.emit('new tweet', tweet);
     });
-    console.log(data);
+
+    stream.on('error', function(error) {
+      console.log(error);
+    });
   });
-
-  // New user
-  socket.on('new user', function(data, callback) {
-    callback(true);
-    socket.username = data;
-
-    if (users.indexOf(socket.username) === -1) {
-      users.push(socket.username);
-      console.log('new users is : ' + socket.username);
-    } else {
-      console.log(socket.username + ' This username is already taken');
-    };
-    updateUsernames();
-    console.log(socket.username);
-  });
-
-  // Update users
-  function updateUsernames() {
-    io.sockets.emit('get users', users);
-  };
 });
 
-server.listen(3000, function() {
-	console.log("Server started on port 3000...");
+server.listen(4000, function() {
+	console.log("Server started on port 4000...");
 });

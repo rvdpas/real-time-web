@@ -1,43 +1,14 @@
 var socket = io();
-var messageWindow = document.querySelector('.msg-window');
-var message = document.querySelector('#send');
-var sendMessage = document.querySelector('#sendform');
 
-var newUserWindow = document.querySelector('.user-window');
-var userName = document.querySelector('#user');
-var newUser = document.querySelector('#newuser');
+var tweetsHolder = document.querySelector('#tweetsHolder');
 
-socket.on('new message', newMsg);
-sendMessage.addEventListener('submit', sendMsg);
-newUser.addEventListener('submit', sendNewUser);
+socket.on('new tweet', newTweet);
 
-function sendNewUser(e) {
-  socket.emit('new user', userName.value, function(data) {
-    if(data) {
-      newUserWindow.style.display = 'none';
-      messageWindow.style.display = 'block';
-    }
-  });
-  e.preventDefault();
-  socket.on('get users', function(data) {
-    data.forEach(function(e) {
-        console.log(e);
-    })
-  })
-}
-
-function sendMsg(e) {
-  socket.emit('send message', message.value);
-  message.value = '';
-  e.preventDefault();
-}
-
-function newMsg(data) {
-  console.log(data);
+function newTweet(tweet) {
   var li = document.createElement('li');
   li.className = "message";
-  li.innerHTML = '<strong>' + data.user + '</strong>: ' + data.msg;
+  li.innerHTML = '<strong>' + tweet.user.screen_name + '</strong>: ' + tweet.text;
 
-  document.querySelector('#messages').appendChild(li);
+  tweetsHolder.appendChild(li);
 }
 
