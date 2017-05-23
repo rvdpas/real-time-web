@@ -70,16 +70,17 @@ app.post('/results', function(req, res){
 io.sockets.on('connection', function (socket) {
   var counter = 0;
 
-  // Make tweet object available from client
   socket.on('tweet', function(tweet) {
-    counter = tweet;
-  });
+      counter = counter++;
+      socket.emit('update counter', counter);
+    });
+
   //6.1 emit(server_emit)
-  socket.emit('server-emit', { current: counter++ });
+  socket.emit('server-emit');
 
   //6.2 on(client-emit)
   socket.on('client-emit', function (data) {
-    socket.emit('server-emit', { current: counter++ });
+    socket.emit('server-emit');
   });
 });
 
