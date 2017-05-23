@@ -1,3 +1,4 @@
+// require modules
 var path = require('path');
 var http = require('http');
 var bodyParser = require('body-parser');
@@ -9,17 +10,22 @@ var app = express();
 var server = http.createServer(app);
 var io = socketio.listen(server);
 
-var userInput = '';
-
+// configure dotenv
 require('dotenv').config();
+
+// create variable for user's input
+var userInput = '';
 
 // Set View Engine
 app.set('view engine', 'ejs' );
 
+// set dynamic files to public map
 app.set('views', path.join(__dirname, 'views'));
 
+// use body-parser for middle ware
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// set static files to public map
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Setting Twitter credentials
@@ -40,11 +46,12 @@ app.get('/results', function(req, res){
   res.render('results.ejs');
 });
 
+// Post tweets to results page
 app.post('/results', function(req, res){
   userInput = '';
   userInput = req.body.hash;
   console.log(userInput)
-
+  // Request tweets based on the users input
   var stream = client.stream('statuses/filter', {track: userInput},  function(stream) {
 
     res.render('results.ejs');
@@ -56,6 +63,23 @@ app.post('/results', function(req, res){
     stream.on('error', function(error) {
       console.log(error);
     });
+  });
+});
+
+// Add counter
+io.sockets.on('connection', function (socket) {
+  var counter = 0;
+
+  // Make tweet object available from client
+  socket.on('tweet', function(tweet) {
+    counter = tweet;
+  });
+  //6.1 emit(server_emit)
+  socket.emit('server-emit', { current: counter++ });
+
+  //6.2 on(client-emit)
+  socket.on('client-emit', function (data) {
+    socket.emit('server-emit', { current: counter++ });
   });
 });
 
