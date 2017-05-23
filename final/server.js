@@ -53,11 +53,13 @@ app.post('/results', function(req, res){
   console.log(userInput)
   // Request tweets based on the users input
   var stream = client.stream('statuses/filter', {track: userInput},  function(stream) {
-
+    var counter = 0;
     res.render('results.ejs');
 
     stream.on('data', function(tweet) {
+     counter++;
      io.emit('new tweet', tweet);
+     io.emit('update counter', counter);
     });
 
     stream.on('error', function(error) {
@@ -66,24 +68,6 @@ app.post('/results', function(req, res){
   });
 });
 
-// Add counter
-io.sockets.on('connection', function (socket) {
-  var counter = 0;
-
-  socket.on('tweet', function(tweet) {
-      counter = counter++;
-      socket.emit('update counter', counter);
-    });
-
-  //6.1 emit(server_emit)
-  socket.emit('server-emit');
-
-  //6.2 on(client-emit)
-  socket.on('client-emit', function (data) {
-    socket.emit('server-emit');
-  });
-});
-
 server.listen(4000, function() {
-	console.log("Server started on port 4000...");
+  console.log("Server started on port 4000...");
 });
