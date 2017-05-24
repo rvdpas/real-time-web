@@ -17,5 +17,6 @@ socket.on('update counter', function(counter) {
 
 // If the server is offline, alert the user.
 socket.on('disconnect', function() {
-  alert('De server is offline en het is niet gelukt om te verbinden met de server.');
+  var h2 = document.querySelector('h2');
+  h2.insertAdjacentHTML('afterend', '<div class="server-down">De server is offline en het is niet gelukt om te verbinden met de server.</div>');
 });

@@ -85,3 +85,14 @@ main h2 {
   padding-bottom: 0.5em;
   border-bottom: 3px solid #1DA1F2;
 }
+
+.server-down {
+  width: 100vw;
+  padding: 2em;
+  background: #1DA1F2;
+  color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: center;
+}

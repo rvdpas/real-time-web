@@ -78,3 +78,8 @@ Start the server and visit the chat app on localhost:3000
 ```
 node server.js
 ```
+
+### Live
+[live version](https://real-time-twitter.herokuapp.com/)
+
+
