@@ -54,6 +54,9 @@ client.stream('statuses/filter', {track: 'javascript'}, function(stream) {
 
 ### Wishlist
 - Load newest tweets on top instead of below every tweet.
+- Visualize the data in a graph with D3.js.
+- Get multiple subjects at ones and update multiple counters to see which tweet is more popular.
+- Get missed data after being offline.
 
 ### Installation
 Clone or download the repository  
