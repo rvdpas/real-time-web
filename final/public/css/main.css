@@ -71,3 +71,25 @@ html, body {
 .msg-window {
   display: none;
 }
+
+main {
+  width: 70%;
+  margin: 0 auto;
+}
+
+main ul {
+  list-style: none;
+}
+
+main ul li {
+  width: 50%;
+  margin: 0 auto;
+  border: 1px solid #333;
+  border-radius: 5px;
+  margin-bottom: 1em;
+  padding: 1em;
+}
+
+main h1, h2 {
+  text-align: center;
+}
