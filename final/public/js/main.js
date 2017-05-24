@@ -8,13 +8,14 @@ socket.on('new tweet', newTweet);
 function newTweet(tweet) {
   tweetsHolder.insertAdjacentHTML('afterbegin', '<li><strong>' + tweet.user.screen_name + '</strong>: ' + tweet.text + '</li>');
 }
-
+// when the counter updates, update the counter by one
 socket.on('update counter', function(counter) {
   var counterElement = document.querySelector('.counter')
   counterElement.innerHTML = 0;
   counterElement.innerHTML = counter;
 });
 
+// If the server is offline, alert the user.
 socket.on('disconnect', function() {
   alert('De server is offline en het is niet gelukt om te verbinden met de server.');
 });

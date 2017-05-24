@@ -62,7 +62,6 @@ client.stream('statuses/filter', {track: 'javascript'}, function(stream) {
 - [Templating with EJS](http://www.embeddedjs.com/)
 - [Twitter Api](https://www.npmjs.com/package/twitter)
 - [Socket.io for real-time](https://socket.io/)
-- 
 
 ### Installation
 Clone or download the repository  

@@ -56,6 +56,7 @@ app.post('/results', function(req, res){
     var counter = 0;
     res.render('results.ejs');
 
+    // on every new tweet count + 1
     stream.on('data', function(tweet) {
      counter++;
      io.emit('new tweet', tweet);
