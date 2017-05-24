@@ -24,3 +24,7 @@ socket.on('update counter', function(counter) {
   counterElement.innerHTML = 0;
   counterElement.innerHTML = counter;
 });
+
+socket.on('disconnect', function() {
+  alert('De server is offline en het is niet gelukt om te verbinden met de server.');
+});

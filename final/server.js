@@ -50,7 +50,7 @@ app.get('/results', function(req, res){
 app.post('/results', function(req, res){
   userInput = '';
   userInput = req.body.hash;
-  console.log(userInput)
+
   // Request tweets based on the users input
   var stream = client.stream('statuses/filter', {track: userInput},  function(stream) {
     var counter = 0;
@@ -67,6 +67,13 @@ app.post('/results', function(req, res){
     });
   });
 });
+
+io.on('connection', function(socket) {
+  socket.on('disconnect', function() {
+    io.emit('disconnect');
+  });
+});
+
 
 server.listen(4000, function() {
   console.log("Server started on port 4000...");

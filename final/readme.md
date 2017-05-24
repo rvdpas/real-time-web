@@ -58,6 +58,12 @@ client.stream('statuses/filter', {track: 'javascript'}, function(stream) {
 - Get multiple subjects at ones and update multiple counters to see which tweet is more popular.
 - Get missed data after being offline.
 
+### Tooling
+- [Templating with EJS](http://www.embeddedjs.com/)
+- [Twitter Api](https://www.npmjs.com/package/twitter)
+- [Socket.io for real-time](https://socket.io/)
+- 
+
 ### Installation
 Clone or download the repository  
 ```
