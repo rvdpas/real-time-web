@@ -21,5 +21,6 @@ socket.on('server-emit', function (data) {
 
 socket.on('update counter', function(counter) {
   var counterElement = document.querySelector('.counter')
+  counterElement.innerHTML = 0;
   counterElement.innerHTML = counter;
 });

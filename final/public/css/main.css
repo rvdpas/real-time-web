@@ -19,14 +19,14 @@ html, body {
   transform: translate(-50%, -50%);
 }
 
-#newuser input {
+.user-window form input {
   padding: 0.5em 0;
   font-size: 1.2em;
   border: 1px solid #a3a3a3;
   margin: 0.5em 0;
 }
 
-#newuser input[type="submit"] {
+.user-window form input[type="submit"] {
   display: block;
   background: none;
   padding: 0.3em 0.5em;
