@@ -76,6 +76,6 @@ io.on('connection', function(socket) {
 });
 
 
-server.listen(4000, function() {
-  console.log("Server started on port 4000...");
+server.listen(process.env.PORT || 8080, function() {
+  console.log("Server started on port 8080...");
 });
