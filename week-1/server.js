@@ -46,7 +46,6 @@ io.sockets.on('connection', function(socket) {
     console.log(data);
   });
 
-
   // New user
   socket.on('new user', function(data, callback) {
     callback(true);
@@ -61,3 +60,5 @@ io.sockets.on('connection', function(socket) {
     io.sockets.emit('get users', users);
   };
 });
+
+

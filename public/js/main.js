@@ -1,12 +1,22 @@
 var socket = io();
 
+var hash = document.querySelector('#newHash');
+if (hash) {
+  document.querySelector('#newHash').addEventListener('submit', function() {
+    localStorage.setItem('query', document.querySelector('#hash').value);
+  });
+}
+
 var tweetsHolder = document.querySelector('#tweetsHolder');
 
 socket.on('new tweet', newTweet);
 
 // Create tweet shell and print it to the page
-function newTweet(tweet) {
-  tweetsHolder.insertAdjacentHTML('afterbegin', '<li><strong>' + tweet.user.screen_name + '</strong>: ' + tweet.text + '</li>');
+function newTweet(data) {
+  var tweet = data.tweet;
+  if (data.query === localStorage.getItem('query')) {
+    tweetsHolder.insertAdjacentHTML('afterbegin', '<li><strong>' + tweet.user.screen_name + '</strong>: ' + tweet.text + '</li>');
+  }
 }
 // when the counter updates, update the counter by one
 socket.on('update counter', function(counter) {

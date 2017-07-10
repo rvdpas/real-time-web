@@ -59,7 +59,10 @@ app.post('/results', function(req, res){
     // on every new tweet count + 1
     stream.on('data', function(tweet) {
      counter++;
-     io.emit('new tweet', tweet);
+     io.emit('new tweet', {
+      tweet: tweet,
+      query: userInput,
+     });
      io.emit('update counter', counter);
     });
 
