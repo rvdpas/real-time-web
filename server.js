@@ -14,7 +14,7 @@ var io = socketio.listen(server);
 require('dotenv').config();
 
 // create variable for user's input
-var userInput = '';
+var userInput = [];
 
 // Set View Engine
 app.set('view engine', 'ejs' );
@@ -41,13 +41,8 @@ app.get('/', function(req, res){
   res.render('index.ejs');
 });
 
-// Get search results
-app.get('/results', function(req, res){
-  res.render('results.ejs');
-});
-
 // Post tweets to results page
-app.post('/results', function(req, res){
+app.post('/', function(req, res){
   userInput = '';
   userInput = req.body.hash;
 
